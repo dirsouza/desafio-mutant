@@ -19,4 +19,4 @@ db:
   charset: utf8mb4
   synchronize: true
   logging: false
-  logger: true
+  logger: file
