@@ -1,0 +1,22 @@
+server:
+  host: localhost
+  port: 3000
+  prefix: api/v1
+
+swagger:
+  title: Mutent - Desafio NodeJS
+  description: API de consulta de usuários
+  version: 0.0.1
+  prefix: api/doc
+
+db:
+  type: mysql
+  host: localhost
+  port: 3306
+  username: root
+  password: root
+  database: db_mutant
+  charset: utf8mb4
+  synchronize: true
+  logging: false
+  logger: true
