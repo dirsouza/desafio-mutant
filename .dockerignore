@@ -1,0 +1,13 @@
+.DS_Store
+.vscode/
+.idea/
+reports/
+coverage/
+node_modules/
+dist/
+test-report.xml
+eslintReport.json
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

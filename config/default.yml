@@ -18,5 +18,5 @@ db:
   database: db_mutant
   charset: utf8mb4
   synchronize: true
-  logging: false
+  logging: true
   logger: file
