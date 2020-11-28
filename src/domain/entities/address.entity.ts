@@ -3,8 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User } from 'Domain/entities';
 
 type TGeo = {
   lat: string;
@@ -38,6 +40,9 @@ export class Address extends BaseEntity {
 
   @Column('json')
   geo: TGeo;
+
+  @OneToOne(() => User, (user) => user.address)
+  user: User;
 
   @CreateDateColumn({
     type: 'timestamp',

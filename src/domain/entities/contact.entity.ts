@@ -3,8 +3,10 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { User } from 'Domain/entities';
 
 type TCompany = {
   name: string;
@@ -35,6 +37,9 @@ export class Contact extends BaseEntity {
 
   @Column('json')
   company: TCompany;
+
+  @OneToOne(() => User, (user) => user.contact)
+  user: User;
 
   @CreateDateColumn({
     type: 'timestamp',
