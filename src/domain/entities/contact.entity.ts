@@ -7,12 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from 'Domain/entities';
-
-type TCompany = {
-  name: string;
-  catchPhrase: string;
-  bs: string;
-};
+import { ICompany } from 'Domain/interfaces';
 
 @Entity('contacts')
 export class Contact extends BaseEntity {
@@ -36,7 +31,7 @@ export class Contact extends BaseEntity {
   website: string;
 
   @Column('json')
-  company: TCompany;
+  company: ICompany;
 
   @OneToOne(() => User, (user) => user.contact)
   user: User;
