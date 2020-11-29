@@ -4,7 +4,7 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
-import { IGeo } from 'Domain/intefaces';
+import { IGeo } from 'Domain/interfaces';
 
 export class AddressDto {
   @IsNotEmpty()

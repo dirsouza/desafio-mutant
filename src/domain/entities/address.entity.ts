@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from 'Domain/entities';
-import { IGeo } from 'Domain/intefaces';
+import { IGeo } from 'Domain/interfaces';
 
 @Entity('address')
 export class Address extends BaseEntity {
