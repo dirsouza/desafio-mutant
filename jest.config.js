@@ -24,5 +24,5 @@ module.exports = {
     '!<rootDir>/domain/entities/**/*.(t|j)s',
     '!<rootDir>/infrastructure/**/*.(t|j)s',
   ],
-  coverageDirectory: './coverage',
+  coverageDirectory: '../coverage',
 }
