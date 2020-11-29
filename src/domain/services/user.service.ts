@@ -22,7 +22,7 @@ export class UserService {
   ) {}
 
   async getUsers(): Promise<AxiosResponse<Array<UserDto>>> {
-    return await this.httpJsonService.get('/users').toPromise();
+    return (await this.httpJsonService.get('/users').toPromise()).data;
   }
 
   async createUser(createUser: Array<UserDto>): Promise<Array<User>> {

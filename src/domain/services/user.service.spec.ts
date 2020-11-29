@@ -127,7 +127,7 @@ describe('UserService', () => {
 
     it('should return a list of users', async () => {
       httpService.get.mockReturnValue({
-        toPromise: jest.fn().mockResolvedValue([mockJson]),
+        toPromise: jest.fn().mockResolvedValue({ data: [mockJson] }),
       });
 
       const result = await userService.getUsers();
