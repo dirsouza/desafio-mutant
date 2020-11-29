@@ -25,5 +25,5 @@ export class ContactDto {
 
   @IsNotEmpty()
   @ValidateNested()
-  companiy: ICompany;
+  company: ICompany;
 }
