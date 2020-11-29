@@ -47,9 +47,27 @@ const mockContact = {
 };
 
 const mockJson = {
-  ...mockUser,
-  address: mockAddress,
-  contact: mockContact,
+  id: 1,
+  name: 'any_name',
+  username: 'any_username',
+  email: 'any_email',
+  address: {
+    street: 'any_street',
+    suite: 'any_suite',
+    city: 'any_city',
+    zipcode: 'any_zipcode',
+    geo: {
+      lat: 'any_lat',
+      lng: 'any_lng',
+    },
+  },
+  phone: 'any_phone',
+  website: 'any_website',
+  company: {
+    name: 'any_name',
+    catchPhrase: 'any_catchPhrase',
+    bs: 'any_bs',
+  },
 };
 
 const mockUserRepository = () => ({
@@ -143,7 +161,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser([mockUser])).rejects.toThrow(
+      await expect(userService.createUser([mockJson])).rejects.toThrow(
         InternalServerErrorException,
       );
     });
@@ -154,7 +172,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser([mockUser])).rejects.toThrow(
+      await expect(userService.createUser([mockJson])).rejects.toThrow(
         new InternalServerErrorException(),
       );
     });
@@ -166,7 +184,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser([mockUser])).rejects.toThrow(
+      await expect(userService.createUser([mockJson])).rejects.toThrow(
         new InternalServerErrorException(),
       );
     });
@@ -176,7 +194,7 @@ describe('UserService', () => {
       contactRepository.createContact.mockResolvedValue(mockContact);
       userRespository.createUser.mockResolvedValue(mockUser);
 
-      const result = await userService.createUser([mockUser]);
+      const result = await userService.createUser([mockJson]);
 
       expect(result).toEqual([mockUser]);
     });

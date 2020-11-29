@@ -7,7 +7,12 @@ import {
   ContactRepository,
   UserRepository,
 } from 'Domain/repositories';
-import { AddressDto, ContactDto, UserDto } from 'Domain/dtos';
+import {
+  AddressDto,
+  ContactDto,
+  JsonplaceholderDto,
+  UserDto,
+} from 'Domain/dtos';
 
 @Injectable()
 export class UserService {
@@ -21,14 +26,31 @@ export class UserService {
     private httpJsonService: HttpService,
   ) {}
 
-  async getUsers(): Promise<AxiosResponse<Array<UserDto>>> {
+  async getUsers(): Promise<AxiosResponse<Array<JsonplaceholderDto>>> {
     return (await this.httpJsonService.get('/users').toPromise()).data;
   }
 
-  async createUser(createUser: Array<UserDto>): Promise<Array<User>> {
+  async createUser(
+    createUser: Array<JsonplaceholderDto>,
+  ): Promise<Array<User>> {
+    const listUsers: Array<UserDto> = createUser
+      .filter((user) => user.address.suite.toLowerCase().includes('suite'))
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((user) => ({
+        name: user.name,
+        username: user.username,
+        address: user.address,
+        contact: {
+          email: user.email,
+          phone: user.phone,
+          website: user.website,
+          company: user.company,
+        },
+      }));
+
     const users: Array<User> = [];
 
-    for (const user of createUser) {
+    for (const user of listUsers) {
       const address = await this.createAddress(user.address);
       const contact = await this.createContact(user.contact);
       const newUser = await this.userRepository.createUser(
