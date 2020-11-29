@@ -34,11 +34,13 @@ describe('ContactRepository', () => {
 
   describe('createContact', () => {
     it('should throw an error when trying to register a new contact', async () => {
+      contactRepository.findOne = jest.fn();
       contactRepository.create = jest.fn();
       contactRepository.save = jest
         .fn()
         .mockRejectedValue(new InternalServerErrorException());
 
+      expect(contactRepository.findOne).not.toBeCalled();
       expect(contactRepository.create).not.toBeCalled();
       expect(contactRepository.save).not.toBeCalled();
       await expect(
@@ -46,12 +48,23 @@ describe('ContactRepository', () => {
       ).rejects.toThrow(InternalServerErrorException);
     });
 
+    it('should return the contact if it already exists', async () => {
+      contactRepository.findOne = jest.fn().mockResolvedValue(mockContact);
+
+      const result = await contactRepository.createContact(mockContact);
+
+      expect(contactRepository.findOne).toBeCalledTimes(1);
+      expect(result).toEqual(mockContact);
+    });
+
     it('should register a new contact successfully', async () => {
+      contactRepository.findOne = jest.fn();
       contactRepository.create = jest.fn();
       contactRepository.save = jest.fn().mockResolvedValue(mockContact);
 
       const result = await contactRepository.createContact(mockContact);
 
+      expect(contactRepository.findOne).toBeCalledTimes(1);
       expect(contactRepository.create).toBeCalledTimes(1);
       expect(contactRepository.save).toBeCalledTimes(1);
       expect(result).toEqual(mockContact);

@@ -7,9 +7,15 @@ import { ContactDto } from 'Domain/dtos';
 export class ContactRepository extends Repository<Contact> {
   async createContact(contactDto: ContactDto): Promise<Contact> {
     try {
-      const contact = this.create(contactDto);
+      const contact = await this.findOne({ email: contactDto.email });
 
-      return await this.save(contact);
+      if (contact) {
+        return contact;
+      }
+
+      const newContact = this.create(contactDto);
+
+      return await this.save(newContact);
     } catch (e) {
       throw new InternalServerErrorException(e.message);
     }
