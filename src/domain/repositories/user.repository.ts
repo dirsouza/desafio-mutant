@@ -11,7 +11,10 @@ export class UserRepository extends Repository<User> {
     contact: Contact,
   ): Promise<User> {
     try {
-      const user = await this.findOne({ username: userDto.username });
+      const user = await this.findOne(
+        { username: userDto.username },
+        { relations: ['address', 'contact'] },
+      );
 
       if (user) {
         return user;
