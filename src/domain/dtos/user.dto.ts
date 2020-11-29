@@ -5,7 +5,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { IsUserAlreadyExist } from 'Infrastructure/validators';
-import { Address, Contact } from 'Domain/entities';
+import { AddressDto, ContactDto } from 'Domain/dtos';
 
 export class UserDto {
   @IsNotEmpty()
@@ -21,9 +21,9 @@ export class UserDto {
 
   @IsNotEmpty()
   @ValidateNested()
-  address: Address;
+  address: AddressDto;
 
   @IsNotEmpty()
   @ValidateNested()
-  contact: Contact;
+  contact: ContactDto;
 }
