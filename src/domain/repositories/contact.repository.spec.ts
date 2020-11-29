@@ -32,8 +32,8 @@ describe('ContactRepository', () => {
     expect(contactRepository).toBeDefined();
   });
 
-  describe('createAddress', () => {
-    it('should throw an error when trying to register a new address', async () => {
+  describe('createContact', () => {
+    it('should throw an error when trying to register a new contact', async () => {
       contactRepository.create = jest.fn();
       contactRepository.save = jest
         .fn()
@@ -46,7 +46,7 @@ describe('ContactRepository', () => {
       ).rejects.toThrow(InternalServerErrorException);
     });
 
-    it('should register a new address successfully', async () => {
+    it('should register a new contact successfully', async () => {
       contactRepository.create = jest.fn();
       contactRepository.save = jest.fn().mockResolvedValue(mockContact);
 
