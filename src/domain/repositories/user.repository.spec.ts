@@ -11,6 +11,36 @@ const mockUser = {
   createdAt: new Date(),
 };
 
+const mockGeo = {
+  lat: 'any_lat',
+  lng: 'any_lng',
+};
+
+const mockAddress = {
+  id: 1,
+  suite: 'any_suite',
+  street: 'any_street',
+  city: 'any_city',
+  zipcode: 'any_zipcode',
+  geo: mockGeo,
+  createdAt: new Date(),
+};
+
+const mockCompany = {
+  name: 'any_company',
+  catchPhrase: 'any_catch_phrase',
+  bs: 'any_bs',
+};
+
+const mockContact = {
+  id: 1,
+  email: 'any_email',
+  phone: 'any_phone',
+  website: 'any_website',
+  companiy: mockCompany,
+  createdAt: new Date(),
+};
+
 describe('UserRepository', () => {
   let userRepository;
 
@@ -35,16 +65,20 @@ describe('UserRepository', () => {
 
       expect(userRepository.create).not.toBeCalled();
       expect(userRepository.save).not.toBeCalled();
-      await expect(userRepository.createUser(mockUser)).rejects.toThrow(
-        InternalServerErrorException,
-      );
+      await expect(
+        userRepository.createUser(mockUser, mockAddress, mockContact),
+      ).rejects.toThrow(InternalServerErrorException);
     });
 
     it('should register a new user successfully', async () => {
       userRepository.create = jest.fn();
       userRepository.save = jest.fn().mockResolvedValue(mockUser);
 
-      const result = await userRepository.createUser(mockUser);
+      const result = await userRepository.createUser(
+        mockUser,
+        mockAddress,
+        mockContact,
+      );
 
       expect(userRepository.create).toBeCalledTimes(1);
       expect(userRepository.save).toBeCalledTimes(1);
