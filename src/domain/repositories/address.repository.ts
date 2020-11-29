@@ -7,9 +7,7 @@ import { AddressDto } from 'Domain/dtos';
 export class AddressRepository extends Repository<Address> {
   async createAddress(addressDto: AddressDto): Promise<Address> {
     try {
-      const address = this.create({
-        ...addressDto,
-      });
+      const address = this.create(addressDto);
 
       return await this.save(address);
     } catch (e) {
