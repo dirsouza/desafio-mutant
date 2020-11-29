@@ -58,11 +58,13 @@ describe('UserRepository', () => {
 
   describe('createUser', () => {
     it('should throw an error when trying to register a new user', async () => {
+      userRepository.findOne = jest.fn();
       userRepository.create = jest.fn();
       userRepository.save = jest
         .fn()
         .mockRejectedValue(new InternalServerErrorException());
 
+      expect(userRepository.findOne).not.toBeCalled();
       expect(userRepository.create).not.toBeCalled();
       expect(userRepository.save).not.toBeCalled();
       await expect(
@@ -70,7 +72,21 @@ describe('UserRepository', () => {
       ).rejects.toThrow(InternalServerErrorException);
     });
 
+    it('should return the user if it already exists', async () => {
+      userRepository.findOne = jest.fn().mockResolvedValue(mockUser);
+
+      const result = await userRepository.createUser(
+        mockUser,
+        mockAddress,
+        mockContact,
+      );
+
+      expect(userRepository.findOne).toBeCalledTimes(1);
+      expect(result).toEqual(mockUser);
+    });
+
     it('should register a new user successfully', async () => {
+      userRepository.findOne = jest.fn();
       userRepository.create = jest.fn();
       userRepository.save = jest.fn().mockResolvedValue(mockUser);
 
@@ -80,6 +96,7 @@ describe('UserRepository', () => {
         mockContact,
       );
 
+      expect(userRepository.findOne).toBeCalledTimes(1);
       expect(userRepository.create).toBeCalledTimes(1);
       expect(userRepository.save).toBeCalledTimes(1);
       expect(result).toEqual(mockUser);

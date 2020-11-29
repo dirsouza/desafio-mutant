@@ -11,13 +11,19 @@ export class UserRepository extends Repository<User> {
     contact: Contact,
   ): Promise<User> {
     try {
-      const user = this.create({
+      const user = await this.findOne({ username: userDto.username });
+
+      if (user) {
+        return user;
+      }
+
+      const newUser = this.create({
         ...userDto,
         address,
         contact,
       });
 
-      return await this.save(user);
+      return await this.save(newUser);
     } catch (e) {
       throw new InternalServerErrorException(e.message);
     }
