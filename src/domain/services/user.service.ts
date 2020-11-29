@@ -1,7 +1,6 @@
 import { HttpService, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address, Contact, User } from 'Domain/entities';
-import { Observable } from 'rxjs';
 import { AxiosResponse } from 'axios';
 import {
   AddressRepository,
@@ -22,8 +21,8 @@ export class UserService {
     private httpJsonService: HttpService,
   ) {}
 
-  getUsers(): Observable<AxiosResponse<UserDto[]>> {
-    return this.httpJsonService.get('/users');
+  async getUsers(): Promise<AxiosResponse<Array<UserDto>>> {
+    return await this.httpJsonService.get('/users').toPromise();
   }
 
   async createUser(createUser: UserDto): Promise<User> {

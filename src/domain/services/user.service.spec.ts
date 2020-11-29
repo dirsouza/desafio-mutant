@@ -113,8 +113,22 @@ describe('UserService', () => {
   });
 
   describe('getUsers()', () => {
+    it('should throw an error when trying to return a list of users', async () => {
+      httpService.get.mockReturnValue({
+        toPromise: jest
+          .fn()
+          .mockRejectedValue(new InternalServerErrorException()),
+      });
+
+      await expect(userService.getUsers()).rejects.toThrow(
+        InternalServerErrorException,
+      );
+    });
+
     it('should return a list of users', async () => {
-      httpService.get.mockResolvedValue([mockJson]);
+      httpService.get.mockReturnValue({
+        toPromise: jest.fn().mockResolvedValue([mockJson]),
+      });
 
       const result = await userService.getUsers();
 
