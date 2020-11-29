@@ -34,11 +34,13 @@ describe('AddressRepository', () => {
 
   describe('createAddress', () => {
     it('should throw an error when trying to register a new address', async () => {
+      addressRepository.findOne = jest.fn();
       addressRepository.create = jest.fn();
       addressRepository.save = jest
         .fn()
         .mockRejectedValue(new InternalServerErrorException());
 
+      expect(addressRepository.findOne).not.toBeCalled();
       expect(addressRepository.create).not.toBeCalled();
       expect(addressRepository.save).not.toBeCalled();
       await expect(
@@ -46,12 +48,23 @@ describe('AddressRepository', () => {
       ).rejects.toThrow(InternalServerErrorException);
     });
 
+    it('should return the address if it already exists', async () => {
+      addressRepository.findOne = jest.fn().mockResolvedValue(mockAddress);
+
+      const result = await addressRepository.createAddress(mockAddress);
+
+      expect(addressRepository.findOne).toBeCalledTimes(1);
+      expect(result).toEqual(mockAddress);
+    });
+
     it('should register a new address successfully', async () => {
+      addressRepository.findOne = jest.fn();
       addressRepository.create = jest.fn();
       addressRepository.save = jest.fn().mockResolvedValue(mockAddress);
 
       const result = await addressRepository.createAddress(mockAddress);
 
+      expect(addressRepository.findOne).toBeCalledTimes(1);
       expect(addressRepository.create).toBeCalledTimes(1);
       expect(addressRepository.save).toBeCalledTimes(1);
       expect(result).toEqual(mockAddress);

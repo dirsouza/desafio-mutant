@@ -7,9 +7,15 @@ import { AddressDto } from 'Domain/dtos';
 export class AddressRepository extends Repository<Address> {
   async createAddress(addressDto: AddressDto): Promise<Address> {
     try {
-      const address = this.create(addressDto);
+      const address = await this.findOne({ suite: addressDto.suite });
 
-      return await this.save(address);
+      if (address) {
+        return address;
+      }
+
+      const newAddress = this.create(addressDto);
+
+      return await this.save(newAddress);
     } catch (e) {
       throw new InternalServerErrorException(e.message);
     }
