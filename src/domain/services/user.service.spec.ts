@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InternalServerErrorException } from '@nestjs/common';
+import { HttpService, InternalServerErrorException } from '@nestjs/common';
 import {
   UserRepository,
   AddressRepository,
@@ -46,6 +46,12 @@ const mockContact = {
   createdAt: new Date(),
 };
 
+const mockJson = {
+  ...mockUser,
+  address: mockAddress,
+  contact: mockContact,
+};
+
 const mockUserRepository = () => ({
   createUser: jest.fn(),
 });
@@ -54,8 +60,12 @@ const mockAddressRepository = () => ({
   createAddress: jest.fn(),
 });
 
-const mockcreateContactRepository = () => ({
+const mockContactRepository = () => ({
   createContact: jest.fn(),
+});
+
+const mockHttpService = () => ({
+  get: jest.fn(),
 });
 
 describe('UserService', () => {
@@ -63,6 +73,7 @@ describe('UserService', () => {
   let userRespository;
   let addressRepository;
   let contactRepository;
+  let httpService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -78,7 +89,11 @@ describe('UserService', () => {
         },
         {
           provide: ContactRepository,
-          useFactory: mockcreateContactRepository,
+          useFactory: mockContactRepository,
+        },
+        {
+          provide: HttpService,
+          useFactory: mockHttpService,
         },
       ],
     }).compile();
@@ -87,6 +102,7 @@ describe('UserService', () => {
     userRespository = await module.get<UserRepository>(UserRepository);
     addressRepository = await module.get<AddressRepository>(AddressRepository);
     contactRepository = await module.get<ContactRepository>(ContactRepository);
+    httpService = await module.get<HttpService>(HttpService);
   });
 
   it('should service and repositories must be defined', () => {
@@ -94,6 +110,17 @@ describe('UserService', () => {
     expect(userRespository).toBeDefined();
     expect(addressRepository).toBeDefined();
     expect(contactRepository).toBeDefined();
+  });
+
+  describe('getUsers()', () => {
+    it('should return a list of users', async () => {
+      httpService.get.mockResolvedValue([mockJson]);
+
+      const result = await userService.getUsers();
+
+      expect(httpService.get).toHaveBeenCalledTimes(1);
+      expect(result).toEqual([mockJson]);
+    });
   });
 
   describe('createUser()', () => {
