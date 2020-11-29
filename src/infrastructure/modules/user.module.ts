@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Address, Contact, User } from 'Domain/entities';
 import {
@@ -6,7 +6,7 @@ import {
   ContactRepository,
   UserRepository,
 } from 'Domain/repositories';
-import { UserService } from 'Domain/services/user.service';
+import { HttpJsonplaceholderService, UserService } from 'Domain/services';
 
 @Module({
   imports: [
@@ -18,6 +18,9 @@ import { UserService } from 'Domain/services/user.service';
       Contact,
       ContactRepository,
     ]),
+    HttpModule.registerAsync({
+      useClass: HttpJsonplaceholderService,
+    }),
   ],
   providers: [UserService],
 })
