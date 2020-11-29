@@ -21,6 +21,7 @@ module.exports = {
     '**/*.(t|j)s',
     '!<rootDir>/main.(t|j)s',
     '!<rootDir>/domain/dtos/**/*.(t|j)s',
+    '!<rootDir>/domain/interfaces/**/*.(t|j)s',
     '!<rootDir>/domain/entities/**/*.(t|j)s',
     '!<rootDir>/infrastructure/**/*.(t|j)s',
   ],
