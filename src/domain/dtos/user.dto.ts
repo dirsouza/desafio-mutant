@@ -4,7 +4,6 @@ import {
   MaxLength,
   ValidateNested,
 } from 'class-validator';
-import { IsUserAlreadyExist } from 'Infrastructure/validators';
 import { AddressDto, ContactDto } from 'Domain/dtos';
 
 export class UserDto {
@@ -16,7 +15,6 @@ export class UserDto {
   @IsNotEmpty()
   @IsString()
   @MaxLength(40)
-  @IsUserAlreadyExist()
   username: string;
 
   @IsNotEmpty()
