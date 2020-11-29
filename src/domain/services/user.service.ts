@@ -25,11 +25,22 @@ export class UserService {
     return await this.httpJsonService.get('/users').toPromise();
   }
 
-  async createUser(createUser: UserDto): Promise<User> {
-    const address = await this.createAddress(createUser.address);
-    const contact = await this.createContact(createUser.contact);
+  async createUser(createUser: Array<UserDto>): Promise<Array<User>> {
+    const users: Array<User> = [];
 
-    return await this.userRepository.createUser(createUser, address, contact);
+    for (const user of createUser) {
+      const address = await this.createAddress(user.address);
+      const contact = await this.createContact(user.contact);
+      const newUser = await this.userRepository.createUser(
+        user,
+        address,
+        contact,
+      );
+
+      users.push(newUser);
+    }
+
+    return users;
   }
 
   async createAddress(createAddress: AddressDto): Promise<Address> {

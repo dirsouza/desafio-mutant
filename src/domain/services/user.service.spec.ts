@@ -143,7 +143,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser(mockUser)).rejects.toThrow(
+      await expect(userService.createUser([mockUser])).rejects.toThrow(
         InternalServerErrorException,
       );
     });
@@ -154,7 +154,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser(mockUser)).rejects.toThrow(
+      await expect(userService.createUser([mockUser])).rejects.toThrow(
         new InternalServerErrorException(),
       );
     });
@@ -166,7 +166,7 @@ describe('UserService', () => {
         new InternalServerErrorException(),
       );
 
-      await expect(userService.createUser(mockUser)).rejects.toThrow(
+      await expect(userService.createUser([mockUser])).rejects.toThrow(
         new InternalServerErrorException(),
       );
     });
@@ -176,9 +176,9 @@ describe('UserService', () => {
       contactRepository.createContact.mockResolvedValue(mockContact);
       userRespository.createUser.mockResolvedValue(mockUser);
 
-      const result = await userService.createUser(mockUser);
+      const result = await userService.createUser([mockUser]);
 
-      expect(result).toEqual(mockUser);
+      expect(result).toEqual([mockUser]);
     });
   });
 });
