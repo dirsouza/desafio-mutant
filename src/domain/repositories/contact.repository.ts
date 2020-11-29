@@ -1,7 +1,7 @@
 import { InternalServerErrorException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { Contact } from 'Domain/entities';
-import { ContactDto } from 'Domain/dtos/contact.dto';
+import { ContactDto } from 'Domain/dtos';
 
 @EntityRepository(Contact)
 export class ContactRepository extends Repository<Contact> {
