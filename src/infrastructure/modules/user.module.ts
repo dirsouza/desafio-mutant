@@ -7,6 +7,7 @@ import {
   UserRepository,
 } from 'Domain/repositories';
 import { HttpJsonplaceholderService, UserService } from 'Domain/services';
+import { UserController } from 'App/v1/controllers';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { HttpJsonplaceholderService, UserService } from 'Domain/services';
       useClass: HttpJsonplaceholderService,
     }),
   ],
+  controllers: [UserController],
   providers: [UserService],
 })
 export class UserModule {}
