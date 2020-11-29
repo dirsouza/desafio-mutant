@@ -1,0 +1,4 @@
+jsonplaceholder:
+  baseURL: http://jsonplaceholder.test
+  timeout: 5000
+  maxRedirects: 5
