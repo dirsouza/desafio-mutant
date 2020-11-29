@@ -7,11 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from 'Domain/entities';
-
-type TGeo = {
-  lat: string;
-  lng: string;
-};
+import { IGeo } from 'Domain/intefaces';
 
 @Entity('address')
 export class Address extends BaseEntity {
@@ -39,7 +35,7 @@ export class Address extends BaseEntity {
   zipcode: string;
 
   @Column('json')
-  geo: TGeo;
+  geo: IGeo;
 
   @OneToOne(() => User, (user) => user.address)
   user: User;
