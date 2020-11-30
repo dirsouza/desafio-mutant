@@ -9,7 +9,7 @@ jsonplaceholder:
   maxRedirects: 5
 
 swagger:
-  title: Mutent - Desafio NodeJS
+  title: Mutant - Desafio NodeJS
   description: API de consulta de usuários
   version: 0.0.1
   prefix: api/doc
