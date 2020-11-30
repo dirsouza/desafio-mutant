@@ -1,7 +1,12 @@
 import { NestFactory } from '@nestjs/core';
 import { WinstonModule } from 'nest-winston';
 import { AppModule } from 'Infrastructure/modules';
-import { apiServer, apiConfig } from 'Infrastructure/servers';
+import {
+  apiServer,
+  apiConfig,
+  swaggerServer,
+  swaggerConfig,
+} from 'Infrastructure/servers';
 import { winstonConfig } from 'Infrastructure/loggers';
 
 async function bootstrap() {
@@ -12,13 +17,19 @@ async function bootstrap() {
   });
 
   apiServer(app);
+  swaggerServer(app);
 
   const { host, port, prefix: apiPrefix } = apiConfig;
+  const { prefix: swaggerPrefix } = swaggerConfig;
 
   await app.listen(port);
   winston.log(
     `Appliation listening on: http://${host}:${port}/${apiPrefix}`,
     'API',
+  );
+  winston.log(
+    `Appliation listening on: http://${host}:${port}/${swaggerPrefix}`,
+    'SWAGGER',
   );
 }
 bootstrap();
