@@ -1,7 +1,8 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { MysqlConnectionOptions } from 'typeorm/driver/mysql/MysqlConnectionOptions';
 import * as config from 'config';
 
-export const dbConfig = config.get('db');
+export const dbConfig: MysqlConnectionOptions = config.get('db');
 
 export const typeOrmConfig: TypeOrmModuleOptions = {
   type: dbConfig.type,
@@ -13,6 +14,5 @@ export const typeOrmConfig: TypeOrmModuleOptions = {
   charset: dbConfig.charset,
   synchronize: dbConfig.synchronize,
   logging: dbConfig.logging,
-  logger: dbConfig.logger,
   entities: [__dirname + '/../../domain/entities/*.entity.{js,ts}'],
 };
