@@ -15,6 +15,7 @@ export const winstonConfig: WinstonModuleOptions = {
       level: 'verbose',
       filename: 'api.log',
       dirname: 'logs',
+      maxsize: 1024 * 1024 * 10,
     }),
   ],
 };
