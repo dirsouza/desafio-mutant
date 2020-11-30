@@ -16,6 +16,9 @@ async function bootstrap() {
   const { host, port, prefix: apiPrefix } = apiConfig;
 
   await app.listen(port);
-  winston.log(`Appliation listening on: http://${host}:${port}/${apiPrefix}`);
+  winston.log(
+    `Appliation listening on: http://${host}:${port}/${apiPrefix}`,
+    'API',
+  );
 }
 bootstrap();
