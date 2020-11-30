@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+  mutant-api:
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    volumes:
+      - ./logs:/usr/src/api/logs
+    depends_on:
+      - mutant-db
+
   mutant-db:
     image: mysql:5.7
     volumes:

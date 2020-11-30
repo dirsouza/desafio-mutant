@@ -16,7 +16,7 @@ swagger:
 
 db:
   type: mysql
-  host: localhost
+  host: mutant-db
   port: 3306
   username: root
   password: root
